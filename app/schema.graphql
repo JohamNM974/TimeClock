@@ -1,0 +1,61 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type ClockIn {
+  clock: ClockType
+}
+
+type ClockOut {
+  clock: ClockType
+}
+
+type ClockType {
+  id: ID!
+  user: UserType!
+  clockedIn: DateTime!
+  clockedOut: DateTime
+}
+
+type ClockedHours {
+  today: Int
+  currentWeek: Int
+  currentMonth: Int
+}
+
+type CreateUser {
+  user: UserType
+}
+
+type CurrentClock {
+  clock: ClockType
+}
+
+scalar DateTime
+scalar GenericScalar
+
+type Mutation {
+  clockIn: ClockIn
+  clockOut: ClockOut
+  createUser(email: String!, password: String!, username: String!): CreateUser
+  obtainToken(username: String!, password: String!): ObtainJSONWebToken
+}
+
+type ObtainJSONWebToken {
+  payload: GenericScalar!
+  refreshExpiresIn: Int!
+  token: String!
+}
+
+type Query {
+  currentClock: CurrentClock
+  clockedHours: ClockedHours
+  me: UserType
+}
+
+type UserType {
+  id: ID!
+  username: String!
+  email: String!
+}
